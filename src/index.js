@@ -32,6 +32,42 @@ class Grid extends Component {
     };
   }
 
+  addC = function(props){
+
+           this.setState((prevState, props) => {
+               if(this.state.rows.length === 0){
+                   const x = <tr>
+                       <td></td>
+                   </tr>;
+                   numRows++;
+                   numCols++;
+                   this.state.columns.push(<td></td>);
+                   return {rows: [x]};
+
+               }
+               else{
+
+                   let r = [];
+                   this.state.columns.push(<td></td>);
+                   for(let row of this.state.rows){
+                       row = <tr>
+                           {this.state.columns}
+                       </tr>
+                       r.push(row);
+
+
+                   }
+                   return {rows: r};
+                  // const column = <td></td>;
+                  // return {columns: [...prevState.column, column]};
+
+               }
+
+
+           });
+
+    }
+
   render() {
     // const addRow = <button onClick={addR}>
 //   Add Row
