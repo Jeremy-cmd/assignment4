@@ -68,6 +68,30 @@ class Grid extends Component {
 
     }
 
+    removeC = function(props){
+
+      this.setState((prevState, props) => {
+
+
+        if(this.state.columns.length === 0){
+            return {rows: []};
+        }
+        else{
+            let r = [];
+            this.state.columns.pop();
+            for(let row of this.state.rows){
+                row = <tr>
+                    {this.state.columns}
+                </tr>
+                r.push(row);
+            }
+            return {rows: r};
+        }
+
+      });
+
+    }
+
   render() {
     // const addRow = <button onClick={addR}>
 //   Add Row
@@ -78,7 +102,7 @@ class Grid extends Component {
 // const removeRow = <button onClick={removeR}>
 //   Remove Row
 // </button>
-//
+
 // const removeColumn = <button onClick={removeC}>
 //   Remove Column
 // </button>
@@ -111,6 +135,10 @@ class Grid extends Component {
                   <button onClick={this.addC.bind(this)}>
                     Add Column
                   </button>
+
+                <button onClick={this.removeC.bind(this)}>
+                Remove Column
+               </button>
 
                   <table id = {"grid"}>
                       {this.state.rows}
