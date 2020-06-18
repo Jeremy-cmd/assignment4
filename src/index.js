@@ -139,7 +139,7 @@ class Grid extends Component {
     removeR = function(props){
 
         this.setState((prevState, props) => {
-            if(this.numRows === 1) {
+            if(this.numRows <= 1) {
                 this.numRows = 0;
                 this.numCols = 0;
                 return {columns: [], rows: []};
