@@ -115,13 +115,13 @@ class Grid extends Component {
                }
                else{
 
-                   let r = [];
+                   let rowArr = [];
                    this.state.rows.push(<td></td>);
                    for(let row of this.state.rows){
                        row = <tr>{this.state.rows}</tr>;
-                       r.push(row);
+                       rowArr.push(row);
                    }
-                   return {rows: r};
+                   return {rows: rowArr};
                   // const column = <td></td>;
                   // return {columns: [...prevState.column, column]};
 
@@ -138,13 +138,13 @@ class Grid extends Component {
         if(this.state.rows.length === 0)
             return {rows:[]};
         else{
-            let r = [];
+            let rowArr = [];
             this.state.rows.pop();
             for(let row of this.state.rows){
                 row = <tr>{this.state.columns}</tr>
-                r.push(row);
+                rowArr.push(row);
             }
-            return {rows: r};
+            return {rows: rowArr};
         }
       });
 
