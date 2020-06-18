@@ -92,6 +92,13 @@ class Grid extends Component {
 
     }
 
+    selected = function(props){
+         this.setState({
+	    color: props.target.value
+	 });
+
+    }
+
   render() {
     // const addRow = <button onClick={addR}>
 //   Add Row
@@ -185,6 +192,15 @@ class Grid extends Component {
                 <button onClick={this.removeC.bind(this)}>
                 Remove Column
                </button>
+
+	       <select onChange={this.selected.bind(this)} id={"selectedID"} >
+		   <option value={"SELECT"} > SELECT </option>
+		   <option value={"Red"}>Red</option>
+		   <option value={"Blue"}>Blue</option>
+		   <option value={"Green"}>Green</option>
+                   <option value={"Yellow"}>Yellow</option>
+               </select>
+              
 
                   <table id = {"grid"}>
                       {this.state.rows}
