@@ -1,54 +1,60 @@
+
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import  './App.css';
 import * as serviceWorker from './serviceWorker';
 
-let numRows = 0;
-let numCols = 0;
-let color;
-//
-//
-// class HelloWorld extends Component {
-//   render() {
-//     return <h1>Hello World!</h1>
-//   }
-// };
-//
-//
 
-//const table = <table id = {"grid"} />;
+
 
 class Grid extends Component {
 
   constructor(props) {
     super(props);
-    this.numRows = numRows;
-    this.numCols = numCols;
+    this.numRows = 0;
+    this.numCols = 0;
     this.state = {
         rows: [],
-        columns: []
+        columns: [],
+        color: "",
 
     };
   }
 
+  addcolor = function(props){
+
+       //wasnt able to figure out how to color a different way
+       props.target.style.backgroundColor = this.state.color;
+
+  }
+
   addC = function(props){
 
+
+
            this.setState((prevState, props) => {
-               if(this.state.rows.length === 0){
+               if(this.numRows === 0){
                    const x = <tr>
-                       <td></td>
+                       <td onClick={this.addcolor.bind(this)} ></td>
                    </tr>;
-                   numRows++;
-                   numCols++;
-                   this.state.columns.push(<td></td>);
+                   //store all columns
+                   this.state.columns.push(<td onClick={this.addcolor.bind(this)} ></td>);
+                   this.numRows++;
+                   this.numCols++;
+                  // this.state.columns.push(<td onClick={this.addcolor(this.numCols)}></td>);
+                 //  this.state.columns.push(<td onClick={this.addcolor.bind(this)}></td>);
+
                    return {rows: [x]};
 
                }
                else{
 
                    let r = [];
-                   this.state.columns.push(<td></td>);
+                   //add onclick method for each cell
+                   this.state.columns.push(<td onClick={this.addcolor.bind(this)} ></td>);
+                   this.numCols++;
+                   //this.state.columns.push(<td onClick={this.addcolor.bind(this)}></td>);
                    for(let row of this.state.rows){
                        row = <tr>
                            {this.state.columns}
@@ -57,6 +63,8 @@ class Grid extends Component {
 
 
                    }
+
+                   //change state to update rows
                    return {rows: r};
                   // const column = <td></td>;
                   // return {columns: [...prevState.column, column]};
@@ -78,6 +86,7 @@ class Grid extends Component {
         }
         else{
             let r = [];
+            //remove last column
             this.state.columns.pop();
             for(let row of this.state.rows){
                 row = <tr>
@@ -85,6 +94,8 @@ class Grid extends Component {
                 </tr>
                 r.push(row);
             }
+            this.numCols--;
+            //update rows
             return {rows: r};
         }
 
@@ -92,115 +103,110 @@ class Grid extends Component {
 
     }
 
-    selected = function(props){
-         this.setState({
-	    color: props.target.value
-	 });
+    addR = function(props){
 
-    }
+        this.setState((prevState, props) => {
+            if(this.state.rows.length === 0){
+                const x = <tr><td onClick={this.addcolor.bind(this)}></td></tr>;
+                this.numRows++;
+                this.numCols++;
+                this.state.rows.push(x);
+                this.state.columns.push(<td onClick={this.addcolor.bind(this)}></td>);
+                return {rows: [x]};
 
-  render() {
-    // const addRow = <button onClick={addR}>
-//   Add Row
-// </button>
-//
+            }
+            else{
 
+                let r = [];
+                this.state.rows.push( <tr>{this.state.columns}</tr>);
+                for(let row of this.state.rows){
+                    r.push(row);
+                }
 
-// const removeRow = <button onClick={removeR}>
-//   Remove Row
-// </button>
-  addR = function(props){
+                this.numRows++;
+                return {rows: r};
+                // const column = <td></td>;
+                // return {columns: [...prevState.column, column]};
 
-           this.setState((prevState, props) => {
-               if(this.state.rows.length === 0){
-                   const x = <tr><td></td></tr>;
-                   this.numRows++;
-                   this.numCols++;
-                   this.state.rows.push(<td></td>);
-                   return {rows: [x]};
-
-               }
-               else{
-
-                   let r = [];
-                   this.state.rows.push(<td></td>);
-                   for(let row of this.state.rows){
-                       row = <tr>{this.state.rows}</tr>;
-                       r.push(row);
-                   }
-                   return {rows: r};
-                  // const column = <td></td>;
-                  // return {columns: [...prevState.column, column]};
-
-               }
+            }
 
 
-           });
+        });
 
     }
 
     removeR = function(props){
 
-      this.setState((prevState, props) => {
-        if(this.state.rows.length === 0)
-            return {rows:[]};
-        else{
-            let r = [];
-            this.state.rows.pop();
-            for(let row of this.state.rows){
-                row = <tr>{this.state.columns}</tr>
-                r.push(row);
+        this.setState((prevState, props) => {
+            if(this.state.rows.length === 0)
+                return {rows:[]};
+            else{
+                let r = [];
+                //remove last row
+                this.state.rows.pop();
+
+                    for(let row of this.state.rows){
+                        r.push(row);
+                    }
+                this.numRows--;
+                return {rows: r};
             }
-            return {rows: r};
-        }
-      });
+        });
 
     }
-// const removeColumn = <button onClick={removeC}>
-//   Remove Column
-// </button>
-//
-// const fillUncolored = <button onClick={fillU}>
-//   Fill All Uncolored
-// </button>
-//
-// const fillAll = <button onClick={fill}>
-//   Fill All
-// </button>
-//
-// const clear = <button onClick={clearAll}>
-//   Clear
-// </button>
-//
-// const select = <select onChange={selected} id={"selectedID"} >
-//         <option value={"SELECT"} > SELECT </option>
-//         <option value={"Red"}>Red</option>
-//         <option value={"Blue"}>Blue</option>
-//         <option value={"Green"}>Green</option>
-//         <option value={"Yellow"}>Yellow</option>
-// </select>
+
+    selected = function(props){
+
+        this.setState({
+            // change color
+            color: props.target.value
+        });
+
+    }
+
+  render() {
 
     return (
 
           <React.Fragment>
 
+                  <button onClick={this.addR.bind(this)}>
+                      Add Row
+                  </button>
 
                   <button onClick={this.addC.bind(this)}>
                     Add Column
+                  </button>
+
+                  <button onClick={this.removeR.bind(this)}>
+                      Remove Row
                   </button>
 
                 <button onClick={this.removeC.bind(this)}>
                 Remove Column
                </button>
 
-	       <select onChange={this.selected.bind(this)} id={"selectedID"} >
-		   <option value={"SELECT"} > SELECT </option>
-		   <option value={"Red"}>Red</option>
-		   <option value={"Blue"}>Blue</option>
-		   <option value={"Green"}>Green</option>
-                   <option value={"Yellow"}>Yellow</option>
+
+               {/* <button onClick={this.fillU.bind(this)}>*/}
+               {/*  Fill All Uncolored*/}
+               {/*</button>*/}
+
+               {/* <button onClick={this.fill.bind(this)}>*/}
+               {/*  Fill All*/}
+               {/*</button>*/}
+
+               {/*<button onClick={this.clearAll.bind(this)}>*/}
+               {/*  Clear*/}
+               {/*</button>*/}
+
+
+              <select onChange={this.selected.bind(this)} id={"selectedID"} >
+                     <option value={"SELECT"} > SELECT </option>
+                     <option value={"Red"}>Red</option>
+                     <option value={"Blue"}>Blue</option>
+                     <option value={"Green"}>Green</option>
+                     <option value={"Yellow"}>Yellow</option>
                </select>
-              
 
                   <table id = {"grid"}>
                       {this.state.rows}
@@ -210,8 +216,6 @@ class Grid extends Component {
     );
   }
 };
-
-
 
 
 ReactDOM.render(
