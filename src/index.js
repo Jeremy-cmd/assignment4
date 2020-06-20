@@ -29,9 +29,7 @@ class Grid extends Component {
 
   }
 
-  addC = function(props){
-
-
+    addC = function (props) {
 
            this.setState((prevState, props) => {
                if(this.numRows === 0){
@@ -164,6 +162,33 @@ class Grid extends Component {
 
     }
 
+    // Fills all uncolored cells with currently selected color. 
+    fillU = function (props) {
+        console.log(this.state.color);
+
+        this.setState((prevState, props) => {
+            this.state.color: yellow
+            return
+        });
+
+        console.log(this.state.color)
+      
+   		/*this.setState((prevState,props)=>{
+   			if(this.numRows=== 0){
+   				return;
+   			}
+   			else{
+   				for(let cell of this.state.columns){
+   					if(cell.style.backgroundColor === ""){
+   						cell.style.backgroundColor = this.state.color;
+   					}
+   				}
+   			}
+   		});
+              console.log(this.state.rows);*/
+    }
+
+
   render() {
 
     return (
@@ -182,14 +207,13 @@ class Grid extends Component {
                       Remove Row
                   </button>
 
-                <button onClick={this.removeC.bind(this)}>
-                Remove Column
-               </button>
+                  <button onClick={this.removeC.bind(this)}>
+                      Remove Column
+                  </button>
 
-
-               {/* <button onClick={this.fillU.bind(this)}>*/}
-               {/*  Fill All Uncolored*/}
-               {/*</button>*/}
+                  <button onClick={this.fillU.bind(this)}>
+                      Fill All Uncolored
+                  </button>
 
                {/* <button onClick={this.fill.bind(this)}>*/}
                {/*  Fill All*/}
@@ -208,7 +232,7 @@ class Grid extends Component {
                      <option value={"Yellow"}>Yellow</option>
                </select>
 
-                  <table id = {"grid"}>
+              <table id = {"grid"}>
                       {this.state.rows}
                   </table>
 
