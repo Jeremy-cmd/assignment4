@@ -1,4 +1,3 @@
-
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
@@ -79,8 +78,10 @@ class Grid extends Component {
       this.setState((prevState, props) => {
 
 
-        if(this.state.columns.length === 0){
-            return {rows: []};
+        if(this.state.columns.length === 1){
+            this.numRows = 0;
+            this.numCols = 0;
+            return {rows: [], columns:[]};
         }
         else{
             let r = [];
@@ -136,8 +137,11 @@ class Grid extends Component {
     removeR = function(props){
 
         this.setState((prevState, props) => {
-            if(this.state.rows.length === 0)
-                return {rows:[]};
+            if(this.numRows <= 1) {
+                this.numRows = 0;
+                this.numCols = 0;
+                return {columns: [], rows: []};
+            }
             else{
                 let r = [];
                 //remove last row
