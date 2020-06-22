@@ -17,16 +17,41 @@ class Grid extends Component {
         rows: [],
         columns: [],
         color: "",
+        onmousedown: false
 
     };
   }
 
-  addcolor = function(props){
 
-       //wasnt able to figure out how to color a different way
-       props.target.style.backgroundColor = this.state.color;
+
+  mousedown = function(props){
+
+      this.setState({
+          onmousedown : true
+      })
+
+      props.target.style.backgroundColor = this.state.color;
 
   }
+
+  mouseup = function(props){
+
+      // onmousedown is false if not holding click
+      this.setState({
+          onmousedown : false
+      })
+  }
+
+  addcolorOver = function(props){
+
+      // only change color if mouse click is on hold
+      if(this.state.onmousedown){
+          props.target.style.backgroundColor = this.state.color;
+      }
+
+  }
+
+
 
   addC = function(props){
 
@@ -35,10 +60,13 @@ class Grid extends Component {
            this.setState((prevState, props) => {
                if(this.numRows === 0){
                    const x = <tr>
-                       <td onClick={this.addcolor.bind(this)} ></td>
+                       <td onMouseDown={this.mousedown.bind(this)} onMouseUp={this.mouseup.bind(this)}
+                           onMouseOver={this.addcolorOver.bind(this)}  ></td>
                    </tr>;
                    //store all columns
-                   this.state.columns.push(<td onClick={this.addcolor.bind(this)} ></td>);
+                   this.state.columns.push(<td
+                       onMouseDown={this.mousedown.bind(this)} onMouseUp={this.mouseup.bind(this)}
+                       onMouseOver={this.addcolorOver.bind(this)}  ></td>);
                    this.numRows++;
                    this.numCols++;
                   // this.state.columns.push(<td onClick={this.addcolor(this.numCols)}></td>);
@@ -51,7 +79,9 @@ class Grid extends Component {
 
                    let r = [];
                    //add onclick method for each cell
-                   this.state.columns.push(<td onClick={this.addcolor.bind(this)} ></td>);
+                   this.state.columns.push(<td
+                       onMouseDown={this.mousedown.bind(this)} onMouseUp={this.mouseup.bind(this)}
+                       onMouseOver={this.addcolorOver.bind(this)}  ></td>);
                    this.numCols++;
                    //this.state.columns.push(<td onClick={this.addcolor.bind(this)}></td>);
                    for(let row of this.state.rows){
@@ -108,11 +138,13 @@ class Grid extends Component {
 
         this.setState((prevState, props) => {
             if(this.state.rows.length === 0){
-                const x = <tr><td onClick={this.addcolor.bind(this)}></td></tr>;
+                const x = <tr><td onMouseDown={this.mousedown.bind(this)} onMouseUp={this.mouseup.bind(this)}
+                                  onMouseOver={this.addcolorOver.bind(this)}></td></tr>;
                 this.numRows++;
                 this.numCols++;
                 this.state.rows.push(x);
-                this.state.columns.push(<td onClick={this.addcolor.bind(this)}></td>);
+                this.state.columns.push(<td onMouseDown={this.mousedown.bind(this)} onMouseUp={this.mouseup.bind(this)}
+                                            onMouseOver={this.addcolorOver.bind(this)}></td>);
                 return {rows: [x]};
 
             }
