@@ -4,9 +4,6 @@ import './index.css';
 import  './App.css';
 import * as serviceWorker from './serviceWorker';
 
-
-
-
 class Grid extends Component {
 
   constructor(props) {
@@ -168,28 +165,14 @@ class Grid extends Component {
 
     // Fills all uncolored cells with currently selected color. 
     fillU = function (props) {
-        console.log(this.state.color);
-
         this.setState((prevState, props) => {
-            this.state.color: yellow
-            return
-        });
+            let x = <td style={{ backgroundColor: this.state.color }} onClick={this.addcolor.bind(this)}></td>;
+            let c = [];
+            for (let i = 0; i < this.state.columns.length; i++) {
 
-        console.log(this.state.color)
-      
-   		/*this.setState((prevState,props)=>{
-   			if(this.numRows=== 0){
-   				return;
-   			}
-   			else{
-   				for(let cell of this.state.columns){
-   					if(cell.style.backgroundColor === ""){
-   						cell.style.backgroundColor = this.state.color;
-   					}
-   				}
-   			}
-   		});
-              console.log(this.state.rows);*/
+            }
+            return { columns: c };
+            });
     }
 
 
